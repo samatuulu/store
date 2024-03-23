@@ -1,11 +1,14 @@
+from rest_framework import generics
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
+
 
 from inventory.models import Product
 
 from .models import Cart, CartItem
-from .serializers import CartItemSerializer
+from .serializers import CartItemSerializer, UserCartSerializer
 
 
 class AddProductToCartAPIView(APIView):
@@ -29,3 +32,12 @@ class AddProductToCartAPIView(APIView):
 
         serializer = CartItemSerializer(cart_item)
         return Response(serializer.data)
+
+
+class UserCartListAPIView(generics.ListAPIView):
+    serializer_class = UserCartSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user
+        return Cart.objects.filter(user=user)
