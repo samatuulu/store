@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from inventory.serializers import ProductSerializer
-from .models import CartItem, Cart
+from .models import CartItem, Cart, Order
 
 
 class CartItemSerializer(serializers.ModelSerializer):
@@ -15,3 +15,10 @@ class UserCartSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cart
         fields = ('id', 'user', 'created_at')
+
+
+class CreateOrderSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Order
+        fields = '__all__'
