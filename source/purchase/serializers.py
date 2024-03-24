@@ -17,7 +17,7 @@ class UserCartSerializer(serializers.ModelSerializer):
         fields = ('id', 'user', 'created_at')
 
 
-class CreateOrderSerializer(serializers.ModelSerializer):
+class OrderSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Order

@@ -9,7 +9,7 @@ from rest_framework.permissions import IsAuthenticated
 from inventory.models import Product
 
 from .models import Cart, CartItem, Order, OrderItem
-from .serializers import CartItemSerializer, UserCartSerializer, CreateOrderSerializer
+from .serializers import CartItemSerializer, UserCartSerializer, OrderSerializer
 
 
 class AddProductToCartAPIView(APIView):
@@ -51,7 +51,7 @@ class UserCartListAPIView(generics.ListAPIView):
 
 
 class CreateOrderAPIView(generics.CreateAPIView):
-    serializer_class = CreateOrderSerializer
+    serializer_class = OrderSerializer
     permission_classes = [IsAuthenticated]
 
     def create(self, request, *args, **kwargs):
@@ -77,4 +77,13 @@ class CreateOrderAPIView(generics.CreateAPIView):
         order.total_price = price_total
         order.save()
 
-        return Response(CreateOrderSerializer(order).data, status=status.HTTP_201_CREATED)
+        return Response(OrderSerializer(order).data, status=status.HTTP_201_CREATED)
+
+
+class OrderListAPIView(generics.ListAPIView):
+    serializer_class = OrderSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user
+        return Order.objects.filter(user=user)
