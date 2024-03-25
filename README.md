@@ -21,7 +21,7 @@ Once, you are in a project root directory you can see the file `docker-compose.y
 Let's build a project via docker.
 - Build a project: `docker-compose up --build`
 - or if you have all the Docker images, the `docker-compose up` command will be faster.
-Once the building/launching process is finished the project will be migrated and launched automatically.
+- You can also run basic django test via command: `docker-exec -it <container_id> bash`then, `cd` to project, finally, the command to run test is `python manage.py test`
 
-Stay cool, stay safe!
+Stay cool, stay safe! :)
 Happy Coding!
